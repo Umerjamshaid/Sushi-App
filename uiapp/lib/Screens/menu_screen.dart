@@ -81,9 +81,16 @@ class _MenuScreenState extends State<MenuScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Text(
               "Food Menu",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+                fontSize: 18,
+              ),
             ),
           ),
+
+          SizedBox(height: 10),
+
           // Popular food
         ],
       ),
