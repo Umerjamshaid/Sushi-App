@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uiapp/Components/button.dart';
+import 'package:uiapp/Components/food_tittle.dart';
 import 'package:uiapp/Themes/Colors.dart';
+import 'package:uiapp/models/food_model.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -11,6 +13,25 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  // Food Menu
+  List<FoodModel> foodMenu = [
+    // Salmon
+    FoodModel(
+      name: "Salmon",
+      price: "120.00",
+      imagePath: "lib/images/gunkan.png",
+      rating: "5.6",
+    ),
+
+    //Tuna
+    FoodModel(
+      name: "Tuna",
+      price: "500.00",
+      imagePath: "lib/images/maki.png",
+      rating: "3.5",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +92,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(20),
                 ),
+                hintText: 'Search here',
               ),
             ),
           ),
@@ -91,7 +113,63 @@ class _MenuScreenState extends State<MenuScreen> {
 
           SizedBox(height: 10),
 
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: foodMenu.length,
+              itemBuilder: (context, index) =>
+                  FoodTittle(food: foodMenu[index]),
+            ),
+          ),
+          SizedBox(height: 25),
+
           // Popular food
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    //Image
+                    Image.asset('lib/images/rice.png', height: 60),
+
+                    SizedBox(width: 20),
+
+                    // name and Price
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // name
+                        Text(
+                          'Rice',
+                          style: GoogleFonts.dmSerifDisplay(fontSize: 18),
+                        ),
+                        SizedBox(height: 10),
+
+                        // .. price
+                        Text(
+                          '\$1200',
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                //Icon
+                const Icon(
+                  Icons.favorite_outline_outlined,
+                  color: Colors.grey,
+                  size: 28,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
