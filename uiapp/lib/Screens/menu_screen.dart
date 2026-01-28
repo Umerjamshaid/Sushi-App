@@ -92,7 +92,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                hintText: 'Search here',
+                hintText: 'Search here...',
               ),
             ),
           ),
