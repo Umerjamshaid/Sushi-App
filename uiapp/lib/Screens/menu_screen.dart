@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uiapp/Components/button.dart';
 import 'package:uiapp/Components/food_tittle.dart';
+import 'package:uiapp/Screens/Food_detail_Screen.dart';
 import 'package:uiapp/Themes/Colors.dart';
 import 'package:uiapp/models/food_model.dart';
 
@@ -31,6 +32,14 @@ class _MenuScreenState extends State<MenuScreen> {
       rating: "3.5",
     ),
   ];
+
+  // Navigate to Product Detail screen:
+  void navigate_To_Food_Details(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FoodDetailScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +126,10 @@ class _MenuScreenState extends State<MenuScreen> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: foodMenu.length,
-              itemBuilder: (context, index) =>
-                  FoodTittle(food: foodMenu[index]),
+              itemBuilder: (context, index) => FoodTittle(
+                food: foodMenu[index],
+                onTap: () => navigate_To_Food_Details(index),
+              ),
             ),
           ),
           SizedBox(height: 25),
