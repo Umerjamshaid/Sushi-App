@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uiapp/models/food_model.dart';
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({super.key});
+  final FoodModel food;
+  const FoodDetailScreen({super.key, required this.food});
 
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
@@ -10,6 +12,13 @@ class FoodDetailScreen extends StatefulWidget {
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.transparent),
+      body: Column(
+        // Listveiw of the Food Details ETC
+
+        // Prices + QUANTYTTYI ETC
+      ),
+    );
   }
 }

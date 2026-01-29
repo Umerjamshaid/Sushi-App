@@ -37,7 +37,9 @@ class _MenuScreenState extends State<MenuScreen> {
   void navigate_To_Food_Details(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => FoodDetailScreen()),
+      MaterialPageRoute(
+        builder: (context) => FoodDetailScreen(food: foodMenu[index]),
+      ),
     );
   }
 
