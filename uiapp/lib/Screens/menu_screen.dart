@@ -51,69 +51,106 @@ class _MenuScreenState extends State<MenuScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Icon(Icons.menu, color: Colors.grey[900]),
-        title: Text('Karachi', style: TextStyle(color: Colors.grey[900])),
+        title: Column(
+          children: [
+            Text(
+              "Karachi",
+              style: TextStyle(color: Colors.grey[900], fontSize: 16),
+            ),
+            const Text(
+              "Chinese & Sushi",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+          ],
+        ),
         centerTitle: true,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 15),
+            child: Icon(Icons.shopping_bag_outlined, color: Colors.black),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //Promo banner
+          // 🎏 Promo Banner
           Container(
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: Colors.red[700],
               borderRadius: BorderRadius.circular(20),
             ),
             margin: const EdgeInsets.symmetric(horizontal: 25),
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+            padding: const EdgeInsets.all(20),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Get 50% Pormo ',
+                      '50% OFF Today',
                       style: GoogleFonts.dmSerifDisplay(
-                        fontSize: 20,
+                        fontSize: 22,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    //redeem it
-                    MyButton(text: 'Redeem IT ', onTap: () {}),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Authentic Chinese Taste',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    const SizedBox(height: 15),
+                    MyButton(text: 'Order Now', onTap: () {}),
                   ],
                 ),
-                // image
                 Image.asset('lib/images/sushi.png', height: 100),
               ],
             ),
           ),
 
           const SizedBox(height: 25),
-          // Search Bar
+          // 🔍 Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
               decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Search sushi, ramen, rice...',
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                hintText: 'Search here...',
               ),
             ),
           ),
 
           const SizedBox(height: 25),
-          //Menu List
+
+          // 🥢 Categories
+          SizedBox(
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              children: const [
+                _CategoryChip(text: "Sushi 🍣"),
+                _CategoryChip(text: "Ramen 🍜"),
+                _CategoryChip(text: "Rice 🍚"),
+                _CategoryChip(text: "Seafood 🦐"),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 25),
+
+          // 🍱 Menu Title
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Text(
-              "Food Menu",
+              "Popular Dishes",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey[800],
@@ -185,6 +222,26 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+//🍟 class
+class _CategoryChip extends StatelessWidget {
+  final String text;
+  const _CategoryChip({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      alignment: Alignment.center,
+      child: Text(text),
     );
   }
 }

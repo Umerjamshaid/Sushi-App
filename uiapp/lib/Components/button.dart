@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uiapp/Themes/Colors.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
@@ -10,17 +11,18 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(color: Color.fromARGB(212, 135, 81, 77) , borderRadius: BorderRadius.circular(40)),
+        decoration: BoxDecoration(
+          color: secoundarycolor,
+          borderRadius: BorderRadius.circular(40),
+        ),
         padding: EdgeInsets.all(25),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(text, style: TextStyle(
-              color: Colors.white,
-            ),),
+            Text(text, style: TextStyle(color: Colors.white)),
             SizedBox(height: 10),
             //Icon
-            Icon(Icons.arrow_forward, color: Colors.white,)
+            Icon(Icons.arrow_forward, color: Colors.white),
           ],
         ),
       ),
