@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uiapp/Screens/intro_screen.dart';
+import 'package:uiapp/models/Shop_models.dart';
 
 import 'Screens/menu_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ShopModels(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: IntroScreen(),
+      home: const IntroScreen(),
       routes: {
         '/intro_screen': (context) => const IntroScreen(),
         '/menu_screen': (context) => const MenuScreen(),

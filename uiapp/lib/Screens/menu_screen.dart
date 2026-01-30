@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:uiapp/Components/button.dart';
 import 'package:uiapp/Components/category_chips.dart';
 import 'package:uiapp/Components/food_tittle.dart';
@@ -7,6 +8,7 @@ import 'package:uiapp/Components/menu_app_bar.dart';
 import 'package:uiapp/Components/search_bar_widget.dart';
 import 'package:uiapp/Screens/Food_detail_Screen.dart';
 import 'package:uiapp/Themes/Colors.dart';
+import 'package:uiapp/models/Shop_models.dart';
 import 'package:uiapp/models/food_model.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -20,27 +22,12 @@ class _MenuScreenState extends State<MenuScreen> {
   // Selected category state
   String selectedCategory = "Sushi 🍣";
 
-  // Food Menu
-  List<FoodModel> foodMenu = [
-    // Salmon
-    FoodModel(
-      name: "Salmon",
-      price: "120.00",
-      imagePath: "lib/images/gunkan.png",
-      rating: "5.6",
-    ),
-
-    //Tuna
-    FoodModel(
-      name: "Tuna",
-      price: "500.00",
-      imagePath: "lib/images/maki.png",
-      rating: "3.5",
-    ),
-  ];
-
   // Navigate to Product Detail screen:
   void navigate_To_Food_Details(int index) {
+    //Get the shop And the menu
+    final shop = context.read<ShopModels>();
+    final foodMenu = shop.foodMenu;
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -51,6 +38,9 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //Get the shop And the menu
+    final shop = context.read<ShopModels>();
+    final foodMenu = shop.foodMenu;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: MenuAppBar(
