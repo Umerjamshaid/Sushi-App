@@ -19,7 +19,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   //decrement quantity
   void decrementQuantity() {
     setState(() {
-      quantityCount--;
+      if (quantityCount > 0) {
+        quantityCount--;
+      }
     });
   }
 

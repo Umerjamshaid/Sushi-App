@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uiapp/Components/button.dart';
+import 'package:uiapp/Components/category_chips.dart';
 import 'package:uiapp/Components/food_tittle.dart';
+import 'package:uiapp/Components/menu_app_bar.dart';
+import 'package:uiapp/Components/search_bar_widget.dart';
 import 'package:uiapp/Screens/Food_detail_Screen.dart';
 import 'package:uiapp/Themes/Colors.dart';
 import 'package:uiapp/models/food_model.dart';
@@ -14,6 +17,9 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  // Selected category state
+  String selectedCategory = "Sushi 🍣";
+
   // Food Menu
   List<FoodModel> foodMenu = [
     // Salmon
@@ -47,29 +53,12 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Icon(Icons.menu, color: Colors.grey[900]),
-        title: Column(
-          children: [
-            Text(
-              "Karachi",
-              style: TextStyle(color: Colors.grey[900], fontSize: 16),
-            ),
-            const Text(
-              "Chinese & Sushi",
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(Icons.shopping_bag_outlined, color: Colors.black),
-          ),
-        ],
+      appBar: MenuAppBar(
+        location: 'Karachi',
+        subtitle: "Chinese & Sushi",
+        onMenuTap: () {},
+        onCartTap: () {},
+        onLocationTap: () {},
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,21 +100,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
           const SizedBox(height: 25),
           // 🔍 Search Bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                hintText: 'Search sushi, ramen, rice...',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
+          SearchBarWidget(),
 
           const SizedBox(height: 25),
 
@@ -135,11 +110,27 @@ class _MenuScreenState extends State<MenuScreen> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              children: const [
-                _CategoryChip(text: "Sushi 🍣"),
-                _CategoryChip(text: "Ramen 🍜"),
-                _CategoryChip(text: "Rice 🍚"),
-                _CategoryChip(text: "Seafood 🦐"),
+              children: [
+                CategoryChip(
+                  text: "Sushi 🍣",
+                  isSelected: selectedCategory == "Sushi 🍣",
+                  onTap: () => setState(() => selectedCategory = "Sushi 🍣"),
+                ),
+                CategoryChip(
+                  text: "Ramen 🍜",
+                  isSelected: selectedCategory == "Ramen 🍜",
+                  onTap: () => setState(() => selectedCategory = "Ramen 🍜"),
+                ),
+                CategoryChip(
+                  text: "Rice 🍚",
+                  isSelected: selectedCategory == "Rice 🍚",
+                  onTap: () => setState(() => selectedCategory = "Rice 🍚"),
+                ),
+                CategoryChip(
+                  text: "Seafood 🦐",
+                  isSelected: selectedCategory == "Seafood 🦐",
+                  onTap: () => setState(() => selectedCategory = "Seafood 🦐"),
+                ),
               ],
             ),
           ),
@@ -222,26 +213,6 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-//🍟 class
-class _CategoryChip extends StatelessWidget {
-  final String text;
-  const _CategoryChip({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      alignment: Alignment.center,
-      child: Text(text),
     );
   }
 }
