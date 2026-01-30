@@ -100,7 +100,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
           // 💳Prices + QUANTYTTYI ETC
           Container(
-            color: primaryColor,
+            color: advanced_color,
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: Column(

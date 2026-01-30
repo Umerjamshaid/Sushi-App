@@ -77,7 +77,7 @@ class _MenuScreenState extends State<MenuScreen> {
           // 🎏 Promo Banner
           Container(
             decoration: BoxDecoration(
-              color: Colors.red[700],
+              color: const Color.fromRGBO(211, 47, 47, 1),
               borderRadius: BorderRadius.circular(20),
             ),
             margin: const EdgeInsets.symmetric(horizontal: 25),
