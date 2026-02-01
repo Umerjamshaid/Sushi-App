@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:uiapp/Components/button.dart';
 import 'package:uiapp/Themes/Colors.dart';
+import 'package:uiapp/models/Shop_models.dart';
 import 'package:uiapp/models/food_model.dart';
 
 class FoodDetailScreen extends StatefulWidget {
@@ -26,14 +28,50 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   //indecrement quantity
-  void indecrementQuantity() {
+  void incrementQuantity() {
     setState(() {
       quantityCount++;
     });
   }
 
   // ADD to cart Method
-  void add_To_Cart() {}
+  void add_To_Cart() {
+    // Add to cart, Only when there is if there is somthing in the cart
+    if (quantityCount > 0) {
+      //Get Accses to the Shop
+      final shop = context.read<ShopModels>();
+
+      //Add to Cart
+      shop.add_to_cart(widget.food, quantityCount);
+
+      //Let the user know it was Succses
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: surfaceColor,
+          content: Text(
+            'Succsesfully Added To Cart',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            // okay button
+            IconButton(
+              onPressed: () {
+                // Pop Once to show remove dialog box
+                Navigator.pop(context);
+
+                //pop again to go to prevoiouse Screen\
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.done),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,79 +138,128 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ),
 
-          // 💳Prices + QUANTYTTYI ETC
+          // 💳 Bottom Price & Quantity Section
           Container(
-            color: advanced_color,
+            decoration: BoxDecoration(
+              color: surfaceColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 20,
+                  offset: Offset(0, -5),
+                ),
+              ],
+            ),
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  //💳Price + QUANTITY
+                  // Price & Quantity Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //price
-                      Text(
-                        "\$" + widget.food.price,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-
-                      //QUANTITY
-                      Row(
+                      // 💰 Price Section
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // minus buton
-                          Container(
-                            decoration: BoxDecoration(
-                              color: secoundarycolor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              onPressed: decrementQuantity,
-                              icon: const Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
+                          Text(
+                            'Total Price',
+                            style: TextStyle(
+                              color: textSecondary,
+                              fontSize: 14,
                             ),
                           ),
-
-                          // QUANTITY button
-                          SizedBox(
-                            width: 40,
-                            child: Center(
-                              child: Text(
-                                quantityCount.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          //plus button
-                          Container(
-                            decoration: BoxDecoration(
-                              color: secoundarycolor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              onPressed: indecrementQuantity,
-                              icon: const Icon(Icons.add, color: Colors.white),
+                          SizedBox(height: 5),
+                          Text(
+                            "\$${widget.food.price}",
+                            style: GoogleFonts.dmSerifDisplay(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor,
                             ),
                           ),
                         ],
                       ),
+
+                      // 🔢 Quantity Selector
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            // Minus Button
+                            GestureDetector(
+                              onTap: quantityCount > 0
+                                  ? decrementQuantity
+                                  : null,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: quantityCount > 0
+                                      ? primaryColor
+                                      : textHint,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+
+                            // Quantity Display
+                            Container(
+                              width: 50,
+                              alignment: Alignment.center,
+                              child: Text(
+                                quantityCount.toString(),
+                                style: TextStyle(
+                                  color: textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+
+                            // Plus Button
+                            GestureDetector(
+                              onTap: incrementQuantity,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
 
-                  SizedBox(height: 25),
-                  //Add to cart button
-                  MyButton(text: "Add To Card", onTap: add_To_Cart),
+                  SizedBox(height: 20),
+
+                  // Add to Cart Button
+                  MyButton(
+                    text: quantityCount > 0
+                        ? "Add $quantityCount to Cart"
+                        : "Add to Cart",
+                    onTap: add_To_Cart,
+                  ),
                 ],
               ),
             ),
