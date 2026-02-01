@@ -47,7 +47,9 @@ class _MenuScreenState extends State<MenuScreen> {
         location: 'Karachi',
         subtitle: "Chinese & Sushi",
         onMenuTap: () {},
-        onCartTap: () {},
+        onCartTap: () {
+          Navigator.pushNamed(context, '/cart_screen');
+        },
         onLocationTap: () {},
       ),
       body: Column(

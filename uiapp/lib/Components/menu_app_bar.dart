@@ -7,6 +7,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onMenuTap;
   final VoidCallback onCartTap;
   final VoidCallback onLocationTap;
+  final int quantityCount;
 
   const MenuAppBar({
     super.key,
@@ -16,6 +17,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onMenuTap,
     required this.onCartTap,
     required this.onLocationTap,
+    this.quantityCount = 0,
   });
 
   @override
@@ -75,11 +77,14 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
         Stack(
           children: [
             IconButton(
-              icon: Icon(Icons.shopping_bag_outlined, color: Colors.black),
+              icon: const Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.black,
+              ),
               onPressed: onCartTap,
             ),
             // Cart Badge
-            if (cartCount > 0)
+            if (quantityCount > 0)
               Positioned(
                 right: 8,
                 top: 8,
@@ -92,7 +97,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
                   constraints: BoxConstraints(minWidth: 16, minHeight: 16),
                   child: Center(
                     child: Text(
-                      '$cartCount',
+                      '$quantityCount',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,

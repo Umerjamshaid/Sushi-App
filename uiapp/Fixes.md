@@ -105,3 +105,99 @@ When a user taps a category:
 
 1. `uiapp/lib/Components/category_chips.dart` - Made class public
 2. `uiapp/lib/Screens/menu_screen.dart` - Added import, state, and updated usage
+
+---
+
+# Add to Cart in MenuAppBar
+
+## How to Call addToCart in MenuAppBar
+
+### 1. Add the addToCart Callback Parameter
+
+Added an optional `addToCart` parameter to `MenuAppBar`:
+
+```dart
+class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String location;
+  final String subtitle;
+  final int cartCount;
+  final VoidCallback onMenuTap;
+  final VoidCallback onCartTap;
+  final VoidCallback onLocationTap;
+  final VoidCallback? addToCart;  // Added this parameter
+
+  const MenuAppBar({
+    super.key,
+    required this.location,
+    required this.subtitle,
+    this.cartCount = 0,
+    required this.onMenuTap,
+    required this.onCartTap,
+    required this.onLocationTap,
+    this.addToCart,  // Optional parameter
+  });
+```
+
+### 2. IconButton in actions[]
+
+The `IconButton` is already wrapped in `actions[]`:
+
+```dart
+actions: [
+  Stack(
+    children: [
+      IconButton(
+        icon: Icon(Icons.shopping_bag_outlined, color: Colors.black),
+        onPressed: () {
+          onCartTap();
+          addToCart?.call();  // Calls addToCart if provided
+        },
+      ),
+      // Cart Badge
+      if (cartCount > 0)
+        Positioned(
+          right: 8,
+          top: 8,
+          child: Container(
+            // ... badge styling
+          ),
+        ),
+    ],
+  ),
+  SizedBox(width: 10),
+],
+```
+
+### 3. Usage in Parent Widget
+
+Pass the `addToCart` callback when using `MenuAppBar`:
+
+```dart
+MenuAppBar(
+  location: 'Karachi',
+  subtitle: "Chinese & Sushi",
+  cartCount: 3,
+  onMenuTap: () {},
+  onCartTap: () {
+    // Navigate to cart screen
+    Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()));
+  },
+  onLocationTap: () {},
+  addToCart: () {
+    // Your add to cart logic here
+    print("Item added to cart!");
+    // You could update cart count, show snackbar, etc.
+  },
+),
+```
+
+## Key Points
+
+- `addToCart` is optional - you don't have to provide it
+- When the cart icon is pressed, both `onCartTap` and `addToCart` are triggered
+- Use `addToCart` for adding items to cart logic
+- Use `onCartTap` for navigation or showing the cart
+
+## Files Modified
+
+1. `uiapp/lib/Components/menu_app_bar.dart` - Added addToCart parameter

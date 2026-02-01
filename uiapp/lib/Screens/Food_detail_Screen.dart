@@ -52,7 +52,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           backgroundColor: surfaceColor,
           content: Text(
             'Succsesfully Added To Cart',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             textAlign: TextAlign.center,
           ),
           actions: [
