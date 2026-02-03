@@ -10,6 +10,7 @@ class ShopModels extends ChangeNotifier {
       price: "120.00",
       imagePath: "lib/images/gunkan.png",
       rating: "5.6",
+      cacategory: "Freash",
     ),
 
     //Tuna
@@ -18,6 +19,7 @@ class ShopModels extends ChangeNotifier {
       price: "500.00",
       imagePath: "lib/images/maki.png",
       rating: "3.5",
+      cacategory: "Tasty",
     ),
   ];
 
@@ -40,4 +42,14 @@ class ShopModels extends ChangeNotifier {
     _cart.remove(food);
     notifyListeners();
   }
+
+  // // In your Shop_models.dart
+  // double getTotalPrice() {
+  //   double total = 0;
+  //   for (var item in cart) {
+  //     total += double.tryParse(item.price) ?? 0;
+  //   }
+  //   notifyListeners();
+  //   return total;
+  // }
 }
