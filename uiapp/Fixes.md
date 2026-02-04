@@ -201,3 +201,54 @@ MenuAppBar(
 ## Files Modified
 
 1. `uiapp/lib/Components/menu_app_bar.dart` - Added addToCart parameter
+
+---
+
+# Dead Code at cart_screen.dart Lines 117-120
+
+## Problem
+
+The code at lines 117-120 in `lib/Screens/cart_screen.dart` is unreachable (dead code):
+
+```dart
+: Container(
+    color: errorColor,
+    child: const Icon(Icons.fastfood),
+),
+```
+
+## Why It's Dead Code
+
+1. **The ternary condition**: The code is in the `else` branch of `foodimagePath != null ? ... : ...`
+
+2. **FoodModel requires imagePath**: In [`FoodModel`](lib/models/food_model.dart:13), `imagePath` is a **required** constructor parameter:
+   ```dart
+   FoodModel({
+     required this.name,
+     required this.price,
+     required this.imagePath,  // REQUIRED - never null
+     required this.rating,
+     this.cacategory,
+   });
+   ```
+
+3. **Result**: Since every `FoodModel` instance must have a non-null `imagePath`, the condition `foodimagePath != null` is **always true**.
+
+4. **Execution flow**:
+   - `foodimagePath` is always non-null
+   - Ternary always takes the `?` branch (Image.asset)
+   - The `:` branch (lines 117-120) is never reached
+
+## The Correct Fallback
+
+The `Image.asset()` widget at lines 103-116 already has an `errorBuilder` that handles image loading failures, showing a placeholder with `Icons.image_not_supported`. This is the proper way to handle image errors.
+
+## Options to Fix
+
+1. **Remove the else branch entirely** - The errorBuilder already handles failures
+2. **Change `imagePath` to nullable** - Make `String? imagePath` in FoodModel if you want to support items without images
+3. **Keep as explicit fallback** - If you want to maintain the semantic difference between "no image path" and "image failed to load", make `imagePath` nullable
+
+## Files Involved
+
+1. `lib/Screens/cart_screen.dart` - Contains the dead code

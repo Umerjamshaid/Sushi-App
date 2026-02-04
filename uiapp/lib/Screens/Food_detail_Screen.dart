@@ -86,7 +86,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               child: ListView(
                 children: [
                   // image
-                  Image.asset(widget.food.imagePath, height: 200),
+                  Image.asset(widget.food.imagePath!, height: 200),
                   const SizedBox(height: 25),
 
                   // rating

@@ -24,7 +24,7 @@ class FoodTittle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // image
-            Image.asset(food.imagePath, height: 140),
+            Image.asset(food.imagePath!, height: 140),
 
             // TExt
             Text(food.name, style: GoogleFonts.dmSerifDisplay(fontSize: 20)),

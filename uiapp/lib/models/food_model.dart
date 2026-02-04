@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class FoodModel {
   String name;
   String price;
-  String imagePath;
+  String? imagePath;
   String rating;
   String? cacategory; // I can work on this latter :)
 
@@ -17,7 +17,7 @@ class FoodModel {
 
   String get _name => name;
   String get _price => price;
-  String get _imagePath => imagePath;
+  String get _imagePath => imagePath!;
   String get _rating => rating;
   String get _category => cacategory!;
 }

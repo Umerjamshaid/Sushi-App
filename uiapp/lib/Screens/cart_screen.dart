@@ -80,34 +80,128 @@ class CartScreen extends StatelessWidget {
                   // get food price
                   final String foodprice = food.price;
 
+                  //Get food Image
+                  final String foodimagePath = food.imagePath!;
+
                   //return nice list view
-                  return Container(
-                    decoration: BoxDecoration(
-                      gradient: primaryGradient,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                    child: ListTile(
-                      title: Text(
-                        foodname,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Product Image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.grey[200],
+                            // Check if image exists
+                            child:
+                                foodimagePath !=
+                                    null // Use the path from your model
+                                ? Image.asset(
+                                    foodimagePath,
+                                    fit: BoxFit
+                                        .cover, // Makes image fill the container
+                                    errorBuilder: (context, error, stackTrace) {
+                                      // If image fails to load, show placeholder
+                                      return Container(
+                                        color: errorColor,
+                                        child: const Icon(
+                                          Icons.image_not_supported,
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Container(
+                                    color: errorColor,
+                                    child: const Icon(
+                                      Icons.fastfood,
+                                    ), // If no image path, show default icon
+                                  ),
+                          ),
                         ),
-                      ),
-                      subtitle: Text(
-                        foodprice,
-                        style: TextStyle(
-                          color: Colors.grey[300],
-                          fontWeight: FontWeight.normal,
+
+                        const SizedBox(height: 16),
+
+                        //Product Details
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 0,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // ?PRICE
+                                Text(
+                                  foodprice,
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+
+                                // ??Product name
+                                Text(
+                                  foodname,
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    height: 1.3,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => remove_from_cart(food, context),
-                        icon: Icon(Icons.delete, color: Colors.grey[300]),
-                      ),
+                        // Delete button
+                        IconButton(
+                          onPressed: () => remove_from_cart(food, context),
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        ),
+                      ],
                     ),
                   );
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     gradient: primaryGradient,
+                  //     borderRadius: BorderRadius.circular(20),
+                  //   ),
+                  //   margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  //   child: ListTile(
+                  //     title: Text(
+                  //       foodname,
+                  //       style: const TextStyle(
+                  //         color: Colors.white,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //     subtitle: Text(
+                  //       foodprice,
+                  //       style: TextStyle(
+                  //         color: Colors.grey[300],
+                  //         fontWeight: FontWeight.normal,
+                  //       ),
+                  //     ),
+                  //     trailing: IconButton(
+                  //       onPressed: () => remove_from_cart(food, context),
+                  //       icon: Icon(Icons.delete, color: Colors.grey[300]),
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
             ),
