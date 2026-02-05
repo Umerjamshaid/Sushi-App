@@ -19,42 +19,44 @@ class FoodTittle extends StatelessWidget {
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // image
-            Image.asset(food.imagePath!, height: 140),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // image
+              Image.asset(food.imagePath!, height: 140),
 
-            // TExt
-            Text(food.name, style: GoogleFonts.dmSerifDisplay(fontSize: 20)),
+              // TExt
+              Text(food.name, style: GoogleFonts.dmSerifDisplay(fontSize: 20)),
 
-            // RAting+ rating
-            SizedBox(
-              width: 160,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  //Price
-                  Text(
-                    '\Rs' + food.price,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
+              // RAting+ rating
+              SizedBox(
+                width: 150,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //Price
+                    Text(
+                      '\Rs.' + food.price,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
 
-                  //Rating
-                  Row(
-                    children: [
-                      Icon(Icons.star, color: Colors.amber[700]),
-                      Text(food.rating, style: TextStyle(color: Colors.grey)),
-                    ],
-                  ),
-                ],
+                    //Rating
+                    Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.amber[700]),
+                        Text(food.rating, style: TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
