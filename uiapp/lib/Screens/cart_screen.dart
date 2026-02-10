@@ -217,7 +217,12 @@ class CartScreen extends StatelessWidget {
               //PAY BUTTON 💳💸
               Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: MyButton(text: 'Pay Now', onTap: () {}),
+                child: MyButton(
+                  text: 'Pay Now',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/payment_screen');
+                  },
+                ),
               ),
             ],
           ),

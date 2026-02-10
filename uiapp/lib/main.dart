@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uiapp/Screens/cart_screen.dart';
 import 'package:uiapp/Screens/intro_screen.dart';
+import 'package:uiapp/Screens/payments_screen.dart';
 import 'package:uiapp/models/Shop_models.dart';
+import 'package:uiapp/models/payments_models.dart';
 
 import 'Screens/menu_screen.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ShopModels(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ShopModels()),
+        ChangeNotifierProvider(create: (context) => PaymentModel()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -28,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/intro_screen': (context) => const IntroScreen(),
         '/menu_screen': (context) => const MenuScreen(),
         '/cart_screen': (context) => const CartScreen(),
+        '/payment_screen': (context) => PaymentScreen(),
       },
     );
   }
