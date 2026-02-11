@@ -11,10 +11,7 @@ import 'Screens/menu_screen.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ShopModels()),
-        ChangeNotifierProvider(create: (context) => PaymentModel()),
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => ShopModels())],
       child: const MyApp(),
     ),
   );
@@ -33,7 +30,6 @@ class MyApp extends StatelessWidget {
         '/intro_screen': (context) => const IntroScreen(),
         '/menu_screen': (context) => const MenuScreen(),
         '/cart_screen': (context) => const CartScreen(),
-        '/payment_screen': (context) => PaymentScreen(),
       },
     );
   }
