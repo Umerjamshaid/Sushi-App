@@ -41,39 +41,124 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: const Color(0xFF1F5E7E),
-              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0xFF1F5E7E).withValues(alpha: 0.9),
+                  backgroundColor,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
-            padding: EdgeInsets.only(bottom: 60),
-            margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '50% OFF Today',
-                      style: GoogleFonts.dmSerifDisplay(
-                        fontSize: 22,
-                        color: Colors.white,
+                // Left side: stats
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Payment Summary',
+                        style: GoogleFonts.dmSerifDisplay(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Authentic Chinese Taste',
-                      style: TextStyle(color: Colors.white70),
-                    ),
-                    const SizedBox(height: 15),
-                    MyButton(text: 'Order Now', onTap: () {}),
-                  ],
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatItem(
+                              label: 'Paid',
+                              value: '\$1,250',
+                              color: successColor,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildStatItem(
+                              label: 'Pending',
+                              value: '\$340',
+                              color: accentGold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_today,
+                            size: 14,
+                            color: Colors.white70,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Next due: 28 Feb 2025',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Image.asset('lib/images/sushi.png', height: 100),
+                const SizedBox(width: 16),
+                // Right side: icon / illustration
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.credit_card,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  // Helper widget
+  Widget _buildStatItem({
+    required String label,
+    required String value,
+    required Color color,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }
