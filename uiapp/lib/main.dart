@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         '/intro_screen': (context) => const IntroScreen(),
         '/menu_screen': (context) => const MenuScreen(),
         '/cart_screen': (context) => const CartScreen(),
-        '/payment_screen': (context) => const PaymentsScreen(),
+        '/payment_screen': (context) => const PaymentScreen(),
       },
     );
   }
