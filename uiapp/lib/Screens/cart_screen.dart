@@ -183,33 +183,37 @@ class CartScreen extends StatelessWidget {
                         ],
                       ),
                     );
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     gradient: primaryGradient,
-                    //     borderRadius: BorderRadius.circular(20),
-                    //   ),
-                    //   margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                    //   child: ListTile(
-                    //     title: Text(
-                    //       foodname,
-                    //       style: const TextStyle(
-                    //         color: Colors.white,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //     subtitle: Text(
-                    //       foodprice,
-                    //       style: TextStyle(
-                    //         color: Colors.grey[300],
-                    //         fontWeight: FontWeight.normal,
-                    //       ),
-                    //     ),
-                    //     trailing: IconButton(
-                    //       onPressed: () => remove_from_cart(food, context),
-                    //       icon: Icon(Icons.delete, color: Colors.grey[300]),
-                    //     ),
-                    //   ),
-                    // );
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: primaryGradient,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      margin: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          foodname,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          foodprice,
+                          style: TextStyle(
+                            color: Colors.grey[300],
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () => remove_from_cart(food, context),
+                          icon: Icon(Icons.delete, color: Colors.grey[300]),
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),

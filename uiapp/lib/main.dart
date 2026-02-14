@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uiapp/Screens/cart_screen.dart';
 import 'package:uiapp/Screens/intro_screen.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const IntroScreen(),
@@ -30,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/intro_screen': (context) => const IntroScreen(),
         '/menu_screen': (context) => const MenuScreen(),
         '/cart_screen': (context) => const CartScreen(),
+        '/payment_screen': (context) => const PaymentsScreen(),
       },
     );
   }
