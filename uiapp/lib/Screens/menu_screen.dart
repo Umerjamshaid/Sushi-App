@@ -92,7 +92,7 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
 
             const SizedBox(height: 25),
-            // 🔍 Search Bar
+            // 🔍 Search Barr babby
             SearchBarWidget(),
 
             const SizedBox(height: 25),
