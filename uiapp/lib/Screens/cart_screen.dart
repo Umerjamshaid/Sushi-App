@@ -59,10 +59,13 @@ class CartScreen extends StatelessWidget {
                       color: Colors.grey[600],
                     ),
                     children: [
-                      TextSpan(text: '1 item. Total (excluding delivery)'),
                       TextSpan(
-                        text: '\$348.99',
-                        style: TextStyle(
+                        text:
+                            '${value.cart.length} item${value.cart.length != 1 ? 's' : ''}. Total (excluding delivery) ',
+                      ),
+                      TextSpan(
+                        text: '\$${value.getTotalPrice().toStringAsFixed(2)}',
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -90,7 +93,7 @@ class CartScreen extends StatelessWidget {
 
                     //return nice list view
                     return Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 18,
                       ),
@@ -105,33 +108,27 @@ class CartScreen extends StatelessWidget {
                               height: 100,
                               color: Colors.grey[200],
                               // Check if image exists
-                              child:
-                                  foodimagePath !=
-                                      null // Use the path from your model
+                              child: foodimagePath != null
                                   ? Image.asset(
                                       foodimagePath,
-                                      fit: BoxFit
-                                          .cover, // Makes image fill the container
-                                      errorBuilder: (context, error, stackTrace) {
-                                        // If image fails to load, show placeholder
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
                                         return Container(
-                                          color: errorColor,
+                                          color: Colors.grey[300],
                                           child: const Icon(
-                                            Icons.image_not_supported,
-                                          ),
+                                              Icons.image_not_supported),
                                         );
                                       },
                                     )
                                   : Container(
-                                      color: errorColor,
-                                      child: const Icon(
-                                        Icons.fastfood,
-                                      ), // If no image path, show default icon
+                                      color: Colors.grey[300],
+                                      child: const Icon(Icons.fastfood),
                                     ),
                             ),
                           ),
 
-                          const SizedBox(height: 16),
+                          const SizedBox(width: 16),
 
                           //Product Details
                           Expanded(
@@ -145,7 +142,7 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   // ?PRICE
                                   Text(
-                                    foodprice,
+                                    '\$$foodprice',
                                     style: GoogleFonts.dmSans(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -181,37 +178,6 @@ class CartScreen extends StatelessWidget {
                             constraints: const BoxConstraints(),
                           ),
                         ],
-                      ),
-                    );
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: primaryGradient,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      margin: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: 20,
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          foodname,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          foodprice,
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () => remove_from_cart(food, context),
-                          icon: Icon(Icons.delete, color: Colors.grey[300]),
-                        ),
                       ),
                     );
                   },

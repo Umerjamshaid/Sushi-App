@@ -75,8 +75,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Watch shop to rebuild when favorite status changes
+    final shop = context.watch<ShopModels>();
+    final isFavorite = shop.isFavorite(widget.food);
+
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () => shop.toggleFavorite(widget.food),
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? primaryColor : Colors.grey[800],
+            ),
+          ),
+          const SizedBox(width: 10),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [

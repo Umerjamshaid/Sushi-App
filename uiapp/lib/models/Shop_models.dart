@@ -24,10 +24,12 @@ class ShopModels extends ChangeNotifier {
   ];
 
   List<FoodModel> _cart = [];
+  final List<FoodModel> _favorites = [];
 
   // Getter Methods - So we can accses them from around the code
   List<FoodModel> get foodMenu => _foodMenu;
   List<FoodModel> get cart => _cart;
+  List<FoodModel> get favorites => _favorites;
 
   // Add To Cart Method
   void add_to_cart(FoodModel fooditem, int quantity) {
@@ -43,13 +45,33 @@ class ShopModels extends ChangeNotifier {
     notifyListeners();
   }
 
-  // // In your Shop_models.dart
-  // double getTotalPrice() {
-  //   double total = 0;
-  //   for (var item in cart) {
-  //     total += double.tryParse(item.price) ?? 0;
-  //   }
-  //   notifyListeners();
-  //   return total;
-  // }
+  // Clear Cart Method
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
+
+  // Toggle Favorite
+  void toggleFavorite(FoodModel food) {
+    if (_favorites.contains(food)) {
+      _favorites.remove(food);
+    } else {
+      _favorites.add(food);
+    }
+    notifyListeners();
+  }
+
+  // Check if Favorite
+  bool isFavorite(FoodModel food) {
+    return _favorites.contains(food);
+  }
+
+  // Calculate total price
+  double getTotalPrice() {
+    double total = 0;
+    for (var item in cart) {
+      total += double.tryParse(item.price) ?? 0;
+    }
+    return total;
+  }
 }

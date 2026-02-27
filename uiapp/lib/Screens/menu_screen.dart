@@ -19,6 +19,9 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  // Global Key for Scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   // Selected category state
   String selectedCategory = "Sushi 🍣";
 
@@ -39,14 +42,84 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     //Get the shop And the menu
-    final shop = context.read<ShopModels>();
+    final shop = context.watch<ShopModels>();
     final foodMenu = shop.foodMenu;
+    
+    // Create a dummy food item for the popular section if not available
+    final popularFood = foodMenu.isNotEmpty 
+        ? foodMenu.last 
+        : FoodModel(name: 'Rice', price: '12.00', imagePath: 'lib/images/rice.png', rating: '4.5', cacategory: 'Side');
+
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.grey[300],
+      drawer: Drawer(
+        backgroundColor: Colors.grey[300],
+        child: Column(
+          children: [
+            // Drawer Header
+            DrawerHeader(
+              child: Center(
+                child: Image.asset(
+                  'lib/images/sushi.png',
+                  height: 100,
+                ),
+              ),
+            ),
+            
+            // Menu Items
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.black),
+              title: const Text('Home', style: TextStyle(color: Colors.black)),
+              onTap: () => Navigator.pop(context),
+            ),
+            
+             ListTile(
+              leading: const Icon(Icons.person, color: Colors.black),
+              title: const Text('Profile', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/profile_screen');
+              },
+            ),
+            
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.black),
+              title: const Text('Favorites', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/favorites_screen');
+              },
+            ),
+            
+            ListTile(
+              leading: const Icon(Icons.delivery_dining, color: Colors.black),
+              title: const Text('Track Order', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                 Navigator.pop(context);
+                 Navigator.pushNamed(context, '/order_tracking_screen');
+              },
+            ),
+
+            const Spacer(),
+
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.black),
+              title: const Text('Logout', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                 // Handle logout
+              },
+            ),
+             const SizedBox(height: 25),
+          ],
+        ),
+      ),
       appBar: MenuAppBar(
         location: 'Karachi',
         subtitle: "Chinese & Sushi",
-        onMenuTap: () {},
+        onMenuTap: () {
+          _scaffoldKey.currentState?.openDrawer();
+        },
         onCartTap: () {
           Navigator.pushNamed(context, '/cart_screen');
         },
@@ -182,14 +255,14 @@ class _MenuScreenState extends State<MenuScreen> {
                         children: [
                           // name
                           Text(
-                            'Rice',
+                            popularFood.name,
                             style: GoogleFonts.dmSerifDisplay(fontSize: 18),
                           ),
                           SizedBox(height: 10),
 
                           // .. price
                           Text(
-                            '\$1200',
+                            '\$${popularFood.price}',
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                         ],
@@ -197,10 +270,13 @@ class _MenuScreenState extends State<MenuScreen> {
                     ],
                   ),
                   //Icon
-                  const Icon(
-                    Icons.favorite_outline_outlined,
-                    color: Colors.grey,
-                    size: 28,
+                  IconButton(
+                    onPressed: () => shop.toggleFavorite(popularFood),
+                    icon: Icon(
+                      shop.isFavorite(popularFood) ? Icons.favorite : Icons.favorite_border,
+                      color: shop.isFavorite(popularFood) ? primaryColor : Colors.grey,
+                      size: 28,
+                    ),
                   ),
                 ],
               ),
